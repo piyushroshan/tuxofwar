@@ -8,6 +8,8 @@ Jaseem Abid <jaseemabid@gmail.com>
 
 Vipin Nair <swvist@gmail.com>
 
+Roshan Piyush <piyushroshan@gmail.com>
+
 UI adapted from UNIXKCD by chromakode.
 
 License

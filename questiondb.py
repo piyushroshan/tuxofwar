@@ -1,7 +1,7 @@
 # Model Defining Questions Database
 import string
 from google.appengine.ext import db
-class question(db.Model):
+class questionm(db.Model):
 	questionNumber = db.IntegerProperty(required=True)
 	question = db.StringProperty(required=True, multiline=True)
 	qimage = db.StringProperty()
@@ -11,8 +11,10 @@ class question(db.Model):
 	opt4 = db.StringProperty(required=True, multiline=True)
 	ans = db.StringProperty(required=True)
 
+
 def getQuestion(num,var):
-	query = question.all()
+	query = questionm.all()
+
 	q = query.filter('questionNumber =',num).get()
 	if q:
 		return ("{"+
@@ -26,3 +28,15 @@ def getQuestion(num,var):
 									"\""+q.opt4.replace('\r\n','<br />')+"\""+
 									"]"+
 				"}")
+	else:
+		return ("{"+
+			"\"num\" : " + "\""+"1"+"\""+","+
+			"\"question\" : "+"\""+"Sorry question not found. We'll fix it Soon"+"\""+","+
+			"\"image\" : "+"\""+"\""+","+ 
+			"\"options\" : " + "["+
+								"\""+""+"\""+","+
+								"\""+""+"\""+","+
+								"\""+""+"\""+","+
+								"\""+""+"\""+
+								"]"+
+			"}")

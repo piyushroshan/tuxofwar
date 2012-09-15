@@ -25,8 +25,11 @@ class contestStart(webapp.RequestHandler):
 				userdb.userPlayStart(var)
 				self.redirect('/?auth=1')
 			else:
-				self.response.headers['Content-Type'] = 'text/html'
-				self.response.out.write("You have already started the contest. You were not supposed to do this. You can continue the contest <a href='/'>here</a>. You will not have a timer and you may be penalized for this. Contact admins for further details." )
+				if userdb.boolRemainingTime()==True:
+					self.redirect('/?auth=1')
+				else:
+					self.response.headers['Content-Type'] = 'text/html'
+					self.response.out.write('You have finished the contest. You cannot participate again <a href="/"">Back to Tux of War</a>')
 
 
 class contestStop(webapp.RequestHandler):
@@ -56,6 +59,17 @@ class contestActiveuser(webapp.RequestHandler):
 		else:
 			self.response.out.write("{ \"name\" : \"NULL\" }")
 			
+class remainingTime(webapp.RequestHandler):
+	def get(self):
+		user = users.get_current_user()
+		if user:
+			time = userdb.userRemainingTime()
+			self.response.out.write("{ \"time\" :\""+ str(time)+"\" }")
+		else:
+			self.response.out.write("{ \"time\" :\""+str(0)+"\" }")
+
+
+
 
 class adminQuestionsAdd(webapp.RequestHandler):
 	def get(self):
@@ -74,7 +88,7 @@ class adminQuestionsSubmit(webapp.RequestHandler):
 	def post(self):
 		if users.get_current_user():
 			if users.is_current_user_admin():
-				q = questiondb.question(questionNumber=string.atoi(self.request.get('qno')),
+				q = questiondb.questionm(questionNumber=string.atoi(self.request.get('qno')),
 										question=self.request.get('ques'),
 										qimage=self.request.get('qimg'),
 										opt1=self.request.get('opt1'),
@@ -94,7 +108,7 @@ class adminQuestionsList(webapp.RequestHandler):
 		if users.get_current_user():
 			if users.is_current_user_admin():
 				self.response.headers['Content-Type'] = 'text/html'
-				query = questiondb.question.all()
+				query = questiondb.questionm.all()
 				result = query.fetch(100)
 				template_values = { 'questions' : result }
 				path = os.path.join(os.path.dirname(__file__), 'templates/questionlist.html')
@@ -142,8 +156,9 @@ application = webapp.WSGIApplication(
 									('/contest/stop/',contestStop),
 									('/contest/question/(\d*)|/', contestQuestion),
 									('/contest/answer/', contestAnswer),
+									('/contest/time/', remainingTime),
 									('/contest/activeuser/', contestActiveuser),
-									('/admin/questions/add/', adminQuestionsAdd),
+									('/admin/questions/add/contest', adminQuestionsAdd),
 									('/admin/questions/submit/', adminQuestionsSubmit),
 									('/admin/questions/list/',adminQuestionsList),
 									('/admin/questions/answered/',adminQuestionsAnswered),

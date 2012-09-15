@@ -25,13 +25,14 @@ function getUrlVars() {
 }
 
 var xkcd = {
-	latest: {"num" : 45},
+	latest: {"num" : 4},
 	last: {"num" : 1},
 	cache: {},
 	baseQ: '/contest/question/',
 	baseA: '/contest/answer/',
 	baseR: '/contest/start/',
 	baseE: '/contest/stop/',
+	baseT: '/contest/time/',
 
 	get: function(num, success, error) {
 		if (num === null) {
@@ -237,7 +238,7 @@ var Filesystem = {
 	'welcome.txt': {type: 'file', read: function (terminal) {
 		'use strict';
 		$.each([
-			$('<h3>').text('Welcome to Tux of War contest console'),
+			$('<h3>').text('Welcome to Roshan Piyush\'s Tux of War contest console'),
 			'Use "ls", "cat", and "cd" to navigate the filesystem.Press "Ctrl" then "L" to clear.',
 			'cat reginfo.txt for registration information.',
 			'The contest opens at 10pm tonight. You may login upto 10:30 pm to finish the contest in time.',
@@ -771,13 +772,17 @@ $(document).ready(function() {
 		/* Example implementation : var cid = getUrlVars()['id']; */
 		if(getUrlVars()['auth']) {
 			Terminal.runCommand('welcome');
-			var dur = 1800, kill = setInterval(function(){
-				$("#timer").text(Math.floor((dur/60)) + " minutes " + Math.floor((dur%60)) +" seconds left");
-				dur -= 1;
+			var dur = 0;
+			$.getJSON("/contest/time/", function(data) {
+   					dur = Number(data.time);
+   			});
+			kill = setInterval(function(){
 				if (dur === 0) {
 					clearTimeout(kill);
 					window.location = xkcd.baseE;
 				}
+				$("#timer").text(Math.floor((dur/60)) + " minutes " + Math.floor((dur%60)) +" seconds left");
+				dur -= 1;
 			},1000);
 		} else if(getUrlVars()['end']) {
 			Terminal.runCommand('end');
