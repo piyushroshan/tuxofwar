@@ -673,7 +673,6 @@ TerminalShell.commands['help'] = TerminalShell.commands['halp'] = function(termi
 
 TerminalShell.commands['welcome'] = function(terminal) {
 	terminal.print($('<h3>').text('Contest started'));
-	terminal.print('Do not reload or logout.'); 
 	terminal.print('Use the following commands to use the contest console:'); 
 	terminal.print('To view any question type the command:'); 
 	terminal.print($('<h3>').text('question <ques_no> '));
