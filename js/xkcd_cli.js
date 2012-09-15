@@ -376,17 +376,8 @@ var Filesystem = {
 			$("Web : <a href='http://github.com/jaseemabid'> http://github.com/jaseemabid</a>"),
 			'Vipin Nair',
 			$("Web : <a href='http://github.com/swvist'> http://github.com/swvist</a>"),
-			'Kartik Singhal',
-			' Phone: +91 974 688 7377',
-			' E-mail: kartik@tathva.org',
-			'Abhishek Gupta',
-			' Phone: +91 963 325 0636',
-			' Email: abhishek@tathva.org',
-			'Jerrin Shajee George',
-			' Phone: +91 9567 428 090',
-			'Probal Mukherjee',
-			' Phone: +91 9020 703 783',
-			' Email: probal@tathva.org'
+			'Roshan Piyush',
+			$("Web : <a href='http://github.com/piyushroshan'> http://github.com/piyushroshan</a>")
 		], function (num, line) {
 			terminal.print(line);
 		});
@@ -565,7 +556,7 @@ TerminalShell.commands['locate'] = function(terminal, what) {
 
 Adventure = {
 	rooms: {
-		0:{description:'You are at a computer using tathva2011.', exits:{west:1, south:10}},
+		0:{description:'You are at a computer using tathva2012.', exits:{west:1, south:10}},
 		1:{description:'Life is peaceful there.', exits:{east:0, west:2}},
 		2:{description:'In the open air.', exits:{east:1, west:3}},
 		3:{description:'Where the skies are blue.', exits:{east:2, west:4}},
@@ -745,7 +736,7 @@ TerminalShell.fallback = function(terminal, cmd) {
 		} else if  (cmd == "hint") {
 			terminal.print(randomChoice([
  				'We offer some really nice polos.',
- 				$('<p>').html('This terminal will remain available at <a href="http://tuxofwar2011.appspot.com">tuxofwar2011.appspot.com</a>'),
+ 				$('<p>').html('This terminal will remain available at <a href="http://piyushtux.appspot.com">tuxofwar2011.appspot.com</a>'),
  				'Use the source, Luke!',
  				'There are cheat codes.'
  			]));

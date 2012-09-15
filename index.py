@@ -29,7 +29,7 @@ class contestStart(webapp.RequestHandler):
 					self.redirect('/?auth=1')
 				else:
 					self.response.headers['Content-Type'] = 'text/html'
-					self.response.out.write('You have finished the contest. You cannot participate again <a href="/"">Back to Tux of War</a>')
+					self.response.out.write('You have finished the contest. You cannot participate again <a href="/">Back to Tux of War</a>')
 
 
 class contestStop(webapp.RequestHandler):
@@ -158,7 +158,7 @@ application = webapp.WSGIApplication(
 									('/contest/answer/', contestAnswer),
 									('/contest/time/', remainingTime),
 									('/contest/activeuser/', contestActiveuser),
-									('/admin/questions/add/contest', adminQuestionsAdd),
+									('/admin/questions/add/', adminQuestionsAdd),
 									('/admin/questions/submit/', adminQuestionsSubmit),
 									('/admin/questions/list/',adminQuestionsList),
 									('/admin/questions/answered/',adminQuestionsAnswered),
